@@ -18,13 +18,13 @@
 import NavItem from "./NavItem.vue"
 import { NAV_ICONS } from "../constants"
 
+import { isPageValid } from "../validators"
+
 defineProps({
   currentPage: {
     required: true,
     type: String,
-    validator(currentPage) {
-      return Object.keys(NAV_ICONS).includes(currentPage)
-    },
+    validator: isPageValid,
   },
 })
 
