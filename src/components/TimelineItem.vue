@@ -5,11 +5,13 @@
       :options="options"
       placeholder="Rest"
       :selected="selectedActivityId"
+      @select="selectedActivityId = $event"
     />
   </li>
 </template>
 
 <script setup>
+import { ref } from "vue"
 import BaseSelect from "../components/BaseSelect.vue"
 
 import { isTimelineItemValid } from "../validators"
@@ -35,7 +37,7 @@ const options = [
   { value: 3, label: "Training" },
 ]
 
-const selectedActivityId = 2
+const selectedActivityId = ref(1)
 </script>
 
 <style lang="scss" scoped></style>

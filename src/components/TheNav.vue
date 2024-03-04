@@ -6,7 +6,7 @@
         :key="page"
         :href="`#${page}`"
         :class="{ 'pointer-events-none bg-gray-200': page === currentPage }"
-        @click="emit('naigate', page)"
+        @click="emit('navigate', page)"
       >
         <component :is="icon" class="h-6 w-6" /> {{ page }}
       </NavItem>
@@ -28,7 +28,7 @@ defineProps({
   },
 })
 
-const emit = defineEmits(["naigate"])
+const emit = defineEmits({ navigate: isPageValid })
 </script>
 
 <style scoped></style>

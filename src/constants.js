@@ -15,3 +15,4 @@ export const NAV_ICONS = {
 }
 
 export const HOURS_IN_A_DAY = 24
+export const MIDNIGHT_HOUR = 0
