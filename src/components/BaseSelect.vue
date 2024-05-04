@@ -25,6 +25,7 @@
 <script setup>
 import { computed } from "vue"
 import { XMarkIcon } from "@heroicons/vue/24/outline"
+import BaseButton from "./BaseButton.vue"
 
 import {
   validateSelectOptions,

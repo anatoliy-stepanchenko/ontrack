@@ -1,7 +1,26 @@
 <template>
-  <h1>Activities</h1>
+  <div>
+    <ul class="divide-y">
+      <ActivityItem
+        v-for="activity in activities"
+        :key="activity"
+        :activity="activity"
+      />
+    </ul>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import ActivityItem from "../components/ActivityItem.vue"
+import { validateActivities } from "../validators.js"
+
+defineProps({
+  activities: {
+    recuared: true,
+    type: Array,
+    validator: validateActivities,
+  },
+})
+</script>
 
 <style lang="scss" scoped></style>
