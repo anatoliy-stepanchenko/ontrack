@@ -1,7 +1,16 @@
-import { NAV_ICONS, HOURS_IN_A_DAY, MIDNIGHT_HOUR } from "./constants"
+import {
+  BUTTON_TYPES,
+  NAV_ICONS,
+  HOURS_IN_A_DAY,
+  MIDNIGHT_HOUR,
+} from "./constants"
 
 export function isPageValid(page) {
   return Object.keys(NAV_ICONS).includes(page)
+}
+
+export function isButtonTypeValid(BUTTON_TYPE_DANGER) {
+  return Object.keys(BUTTON_TYPES).includes(type)
 }
 
 export function validateTimelineItems(timelineItems) {
