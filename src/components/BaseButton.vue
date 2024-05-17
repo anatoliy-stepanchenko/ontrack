@@ -19,11 +19,16 @@ defineProps({
 </script>
 
 <script>
-import { BUTTON_TYPE_DANGER, BUTTON_TYPE_NEUTRAL } from "../constants.js"
+import {
+  BUTTON_TYPE_DANGER,
+  BUTTON_TYPE_NEUTRAL,
+  BUTTON_TYPE_PRIMARY,
+} from "../constants.js"
 
 const typeClassesButton = {
   [BUTTON_TYPE_DANGER]: " bg-red-500 p-3 enabled:hover:bg-red-600 text-white",
   [BUTTON_TYPE_NEUTRAL]: " bg-gray-100 p-3 enabled:hover:bg-gray-200",
+  [BUTTON_TYPE_PRIMARY]: " bg-green-400 p-3 enabled:hover:bg-green-500",
 }
 </script>
 
