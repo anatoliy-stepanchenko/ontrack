@@ -4,10 +4,12 @@
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
+      :activity-select-options="activitySelectOptions"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
+      @delete-activity="deleteActivity"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
@@ -22,7 +24,11 @@ import TheTimeline from "./pages/TheTimeline.vue"
 import TheActivities from "./pages/TheActivities.vue"
 import TheProgress from "./pages/TheProgress.vue"
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "./constants"
-import { normalizePageHash, generateTilineItems } from "./functions"
+import {
+  normalizePageHash,
+  generateTilineItems,
+  generateActivitySelectOptions,
+} from "./functions"
 
 const timelineItems = generateTilineItems()
 
@@ -32,7 +38,13 @@ function goTo(page) {
   currentPage.value = page
 }
 
-const activities = ["Coding", "Reading", "Training"]
+const activities = ref(["Coding", "Reading", "Training"])
+
+const activitySelectOptions = generateActivitySelectOptions(activities.value)
+
+function deleteActivity(activity) {
+  activities.value.splice(activities.value.indexOf(activity), 1)
+}
 </script>
 
 <style scoped></style>

@@ -49,8 +49,12 @@ export function isNumberOrNull(value) {
   return isNumber(value) || isNull(value)
 }
 
-function isSelectOptionValid({ value, label }) {
-  return isNumber(value) && isString(label)
+export function isSelectOptionValid({ value, label }) {
+  return isNumber(value) && isNotEmptyString(label)
+}
+
+export function isUndefined(value) {
+  return value === undefined
 }
 
 function isBetween(value, start, end) {
@@ -63,10 +67,6 @@ function isNumber(value) {
 
 function isString(value) {
   return typeof value === "string"
-}
-
-function isUndefined(value) {
-  return value === undefined
 }
 
 function isNull(value) {

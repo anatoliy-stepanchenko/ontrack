@@ -16,8 +16,6 @@ defineProps({
     validarot: isButtonTypeValid,
   },
 })
-
-console.log("base batton setup")
 </script>
 
 <script>
@@ -27,8 +25,6 @@ const typeClassesButton = {
   [BUTTON_TYPE_DANGER]: " bg-red-500 p-3 enabled:hover:bg-red-600 text-white",
   [BUTTON_TYPE_NEUTRAL]: " bg-gray-100 p-3 enabled:hover:bg-gray-200",
 }
-
-console.log("base batton")
 </script>
 
 <style scoped></style>
