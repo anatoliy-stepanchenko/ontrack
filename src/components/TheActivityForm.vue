@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { nextTick, ref } from "vue"
 import BaseButton from "./BaseButton.vue"
 import { PlusIcon } from "@heroicons/vue/24/outline"
 import { BUTTON_TYPE_PRIMARY } from "../constants.js"
@@ -26,9 +26,11 @@ const emit = defineEmits({
   submit: isActivityValid,
 })
 
-function submit() {
+async function submit() {
   emit("submit", activity.value)
   activity.value = ""
+  await nextTick() //this function is needed so that the DOM is updated first and then the scroll works
+  window.scrollTo(0, document.body.scrollHeight)
 }
 
 const activity = ref("")
