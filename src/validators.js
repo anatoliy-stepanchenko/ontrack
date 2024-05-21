@@ -69,12 +69,12 @@ export function isNull(value) {
   return value === null
 }
 
-function isBetween(value, start, end) {
-  return value >= start && value <= end
+export function isNumber(value) {
+  return typeof value === "number"
 }
 
-function isNumber(value) {
-  return typeof value === "number"
+function isBetween(value, start, end) {
+  return value >= start && value <= end
 }
 
 function isString(value) {
