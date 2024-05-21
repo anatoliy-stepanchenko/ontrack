@@ -4,7 +4,9 @@
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
+      :activities="activities"
       :activity-select-options="activitySelectOptions"
+      @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
@@ -32,7 +34,7 @@ import {
   generateActivities,
 } from "./functions"
 
-const timelineItems = generateTilineItems()
+const timelineItems = ref(generateTilineItems())
 
 const currentPage = ref(normalizePageHash())
 
@@ -47,11 +49,20 @@ const activitySelectOptions = computed(() =>
 )
 
 function deleteActivity(activity) {
+  timelineItems.value.forEach((timelineItem) => {
+    if (timelineItem.activityId === activity.id) {
+      timelineItem.activityId = null
+    }
+  })
   activities.value.splice(activities.value.indexOf(activity), 1)
 }
 
 function createActivity(activity) {
   activities.value.push(activity)
+}
+
+function setTimelineItemActivity({ timelineItem, activity }) {
+  timelineItem.activityId = activity?.id || null
 }
 </script>
 

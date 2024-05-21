@@ -38,7 +38,10 @@ export function generateTilineItems() {
   const timelineItems = []
 
   for (let hour = MIDNIGHT_HOUR; hour < HOURS_IN_A_DAY; hour++) {
-    timelineItems.push({ hour })
+    timelineItems.push({
+      hour,
+      activityId: null,
+    })
   }
 
   return timelineItems
