@@ -2,7 +2,9 @@ import {
   PAGE_TIMELINE,
   HOURS_IN_A_DAY,
   MIDNIGHT_HOUR,
+  SECONDS_IN_MINUTE,
   SECONDS_IN_HOUR,
+  MINUTES_IN_HOUR,
 } from "./constants"
 import { isNull, isPageValid } from "./validators"
 
@@ -52,4 +54,19 @@ export function generateActivitySelectOptions(activities) {
     value: activity.id,
     label: activity.name,
   }))
+}
+
+export function generatePeriodSelectOptions(periodsInMinutes) {
+  return periodsInMinutes.map((periodInMinutes) => ({
+    value: periodInMinutes * SECONDS_IN_MINUTE,
+    label: generatePeriodSelectOptionsLabel(periodInMinutes),
+  }))
+}
+
+function generatePeriodSelectOptionsLabel(periodInMinutes) {
+  const hours = Math.floor(periodInMinutes / MINUTES_IN_HOUR)
+    .toString()
+    .padStart(2, 0)
+  const minutes = (periodInMinutes % MINUTES_IN_HOUR).toString().padStart(2, 0)
+  return `${hours}:${minutes}`
 }
