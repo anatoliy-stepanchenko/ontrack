@@ -7,36 +7,15 @@
       :selected="timelineItem.activityId"
       @select="selectActivity"
     />
-    <div class="flex w-full gap-2">
-      <BaseButton :type="BUTTON_TYPE_DANGER"
-        ><ArrowPathIcon class="h-8"
-      /></BaseButton>
-      <div
-        class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl"
-      >
-        00:00:00
-      </div>
-      <BaseButton :type="BUTTON_TYPE_WARNING"
-        ><PauseIcon class="h-8"
-      /></BaseButton>
-      <BaseButton :type="BUTTON_TYPE_SUCCESS"
-        ><PlayIcon class="h-8"
-      /></BaseButton>
-    </div>
+    <TimelineStopwatch :seconds="timelineItem.activitySeconds" />
   </li>
 </template>
 
 <script setup>
-import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline"
 import BaseSelect from "../components/BaseSelect.vue"
-import BaseButton from "./BaseButton.vue"
+import TimelineStopwatch from "../components/TimelineStopwatch.vue"
 import TimelineHour from "../components/TimelineHour.vue"
-import {
-  NULLABLE_ACTIVITY,
-  BUTTON_TYPE_DANGER,
-  BUTTON_TYPE_WARNING,
-  BUTTON_TYPE_SUCCESS,
-} from "../constants"
+import { NULLABLE_ACTIVITY } from "../constants"
 
 import {
   isTimelineItemValid,

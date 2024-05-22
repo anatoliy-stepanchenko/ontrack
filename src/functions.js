@@ -5,6 +5,7 @@ import {
   SECONDS_IN_MINUTE,
   SECONDS_IN_HOUR,
   MINUTES_IN_HOUR,
+  MILLISECONDS_IN_SECOND,
 } from "./constants"
 import { isNull, isPageValid } from "./validators"
 
@@ -43,6 +44,7 @@ export function generateTilineItems() {
     timelineItems.push({
       hour,
       activityId: null,
+      activitySeconds: 0,
     })
   }
 
@@ -61,6 +63,16 @@ export function generatePeriodSelectOptions(periodsInMinutes) {
     value: periodInMinutes * SECONDS_IN_MINUTE,
     label: generatePeriodSelectOptionsLabel(periodInMinutes),
   }))
+}
+
+export function formatSeconds(seconds) {
+  const date = new Date()
+
+  date.setTime(Math.abs(seconds) * MILLISECONDS_IN_SECOND)
+
+  const utc = date.toUTCString()
+
+  return utc.substring(utc.indexOf(":") - 2, utc.indexOf(":") + 6)
 }
 
 function generatePeriodSelectOptionsLabel(periodInMinutes) {
