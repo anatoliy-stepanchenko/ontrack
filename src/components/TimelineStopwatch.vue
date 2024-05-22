@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full gap-2">
+  <div class="flex w-full gap-4">
     <BaseButton :type="BUTTON_TYPE_DANGER"
       ><ArrowPathIcon class="h-8"
     /></BaseButton>

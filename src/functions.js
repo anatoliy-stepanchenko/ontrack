@@ -1,7 +1,6 @@
 import {
   PAGE_TIMELINE,
   HOURS_IN_A_DAY,
-  MIDNIGHT_HOUR,
   SECONDS_IN_MINUTE,
   SECONDS_IN_HOUR,
   MINUTES_IN_HOUR,
@@ -37,18 +36,13 @@ export function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }
 
-export function generateTilineItems() {
-  const timelineItems = []
-
-  for (let hour = MIDNIGHT_HOUR; hour < HOURS_IN_A_DAY; hour++) {
-    timelineItems.push({
-      hour,
-      activityId: null,
-      activitySeconds: 0,
-    })
-  }
-
-  return timelineItems
+export function generateTilineItems(activities) {
+  return [...Array(HOURS_IN_A_DAY).keys()].map((hour) => ({
+    hour,
+    activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+    activitySeconds:
+      hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
+  }))
 }
 
 export function generateActivitySelectOptions(activities) {
