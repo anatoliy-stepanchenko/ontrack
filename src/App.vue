@@ -8,6 +8,7 @@
       :activity-select-options="activitySelectOptions"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
+      ref="timeline"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
@@ -42,7 +43,16 @@ const timelineItems = ref(generateTilineItems(activities.value))
 
 const currentPage = ref(normalizePageHash())
 
+const timeline = ref()
+
 function goTo(page) {
+  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
+    timeline.value.scrollToHour()
+  }
+
+  if (page !== PAGE_TIMELINE) {
+    document.body.scrollIntoView()
+  }
   currentPage.value = page
 }
 
