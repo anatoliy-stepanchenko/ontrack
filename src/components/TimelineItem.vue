@@ -1,6 +1,9 @@
 <template>
   <li class="border-grey-200 relative flex flex-col gap-2 border-t px-4 py-10">
-    <TimelineHour :hour="timelineItem.hour" />
+    <TimelineHour
+      :hour="timelineItem.hour"
+      @click.prevent="emit('scrollToHour', timelineItem.hour)"
+    />
     <BaseSelect
       :options="activitySelectOptions"
       placeholder="Rest"
@@ -25,6 +28,7 @@ import {
   validateSelectOptions,
   isActivityValid,
   validateActivities,
+  isHourValid,
 } from "../validators"
 
 const props = defineProps({
@@ -47,6 +51,7 @@ const props = defineProps({
 
 const emit = defineEmits({
   selectActivity: isActivityValid,
+  scrollToHour: isHourValid,
 })
 
 function selectActivity(id) {
