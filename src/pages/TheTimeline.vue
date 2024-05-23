@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue"
+import { nextTick, ref, watchPostEffect } from "vue"
 import TimelineItem from "../components/TimelineItem.vue"
 
 import {
@@ -24,10 +24,11 @@ import {
   validateActivities,
   isTimelineItemValid,
   isActivityValid,
+  isPageValid,
 } from "../validators"
-import { MIDNIGHT_HOUR } from "../constants"
+import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "../constants"
 
-defineProps({
+const props = defineProps({
   timelineItems: {
     required: true,
     type: Array,
@@ -43,6 +44,11 @@ defineProps({
     type: Array,
     validator: validateActivities,
   },
+  currentPage: {
+    required: true,
+    type: String,
+    validator: isPageValid,
+  },
 })
 
 const emit = defineEmits({
@@ -55,7 +61,12 @@ const emit = defineEmits({
 
 const timelineItemRefs = ref([])
 
-onMounted(scrollToCurrentTimeleneItem)
+watchPostEffect(async () => {
+  if (props.currentPage === PAGE_TIMELINE) {
+    await nextTick()
+    scrollToCurrentTimeleneItem()
+  }
+})
 
 function scrollToCurrentTimeleneItem() {
   const currentHour = new Date().getHours()
