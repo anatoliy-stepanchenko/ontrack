@@ -8,12 +8,14 @@
         :activities="activities"
         :activity-select-options="activitySelectOptions"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
+        ref="timelineItemRefs"
       />
     </ul>
   </div>
 </template>
 
 <script setup>
+import { onMounted, ref } from "vue"
 import TimelineItem from "../components/TimelineItem.vue"
 
 import {
@@ -23,6 +25,7 @@ import {
   isTimelineItemValid,
   isActivityValid,
 } from "../validators"
+import { MIDNIGHT_HOUR } from "../constants"
 
 defineProps({
   timelineItems: {
@@ -49,6 +52,20 @@ const emit = defineEmits({
     )
   },
 })
+
+const timelineItemRefs = ref([])
+
+onMounted(scrollToCurrentTimeleneItem)
+
+function scrollToCurrentTimeleneItem() {
+  const currentHour = new Date().getHours()
+
+  if (currentHour === MIDNIGHT_HOUR) {
+    document.body.scrollIntoView()
+  } else {
+    timelineItemRefs.value[currentHour - 1].$el.scrollIntoView()
+  }
+}
 </script>
 
 <style lang="scss" scoped></style>
