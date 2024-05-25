@@ -5,13 +5,7 @@
         v-for="timelineItem in timelineItems"
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
-        :activities="activities"
-        :activity-select-options="activitySelectOptions"
-        @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
         @scroll-to-hour="scrollToHour"
-        @update-activity-seconds="
-          emit('updateTimelineItemActivitySeconds', timelineItem, $event)
-        "
         ref="timelineItemRefs"
       />
     </ul>
@@ -22,15 +16,7 @@
 import { nextTick, ref, watchPostEffect } from "vue"
 import TimelineItem from "../components/TimelineItem.vue"
 
-import {
-  validateTimelineItems,
-  validateSelectOptions,
-  validateActivities,
-  isTimelineItemValid,
-  isActivityValid,
-  isPageValid,
-  isNumber,
-} from "../validators"
+import { validateTimelineItems, isPageValid } from "../validators"
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "../constants"
 
 const props = defineProps({
@@ -39,34 +25,11 @@ const props = defineProps({
     type: Array,
     validator: validateTimelineItems,
   },
-  activitySelectOptions: {
-    required: true,
-    type: Array,
-    validator: validateSelectOptions,
-  },
-  activities: {
-    required: true,
-    type: Array,
-    validator: validateActivities,
-  },
+
   currentPage: {
     required: true,
     type: String,
     validator: isPageValid,
-  },
-})
-
-const emit = defineEmits({
-  setTimelineItemActivity(timelineItem, activity) {
-    return [isTimelineItemValid(timelineItem), isActivityValid(activity)].every(
-      Boolean
-    )
-  },
-
-  updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
-    return [isTimelineItemValid(timelineItem), isNumber(activitySeconds)].every(
-      Boolean
-    )
   },
 })
 

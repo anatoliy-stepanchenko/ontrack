@@ -10,14 +10,13 @@
       <BaseSelec
         class="grow font-mono"
         placeholder="hh:mm"
-        :options="PERIOD_SELECT_OPTIONS"
+        :options="periodSelectOptions"
         :selected="activity.secondsToComplete || null"
         @select="emit('setSecondsToComplete', $event || 0)"
       />
       <ActivitySecondsToComplete
         v-if="activity.secondsToComplete"
         :activity="activity"
-        :timeline-items="timelineItems"
       />
     </div>
   </li>
@@ -28,13 +27,9 @@ import { TrashIcon } from "@heroicons/vue/24/outline"
 import BaseButton from "./BaseButton.vue"
 import BaseSelec from "./BaseSelect.vue"
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue"
-import { PERIOD_SELECT_OPTIONS, BUTTON_TYPE_DANGER } from "../constants.js"
-import {
-  isActivityValid,
-  isUndefined,
-  isNumber,
-  validateTimelineItems,
-} from "../validators.js"
+import { BUTTON_TYPE_DANGER } from "../constants.js"
+import { isActivityValid, isUndefined, isNumber } from "../validators.js"
+import { inject } from "vue"
 
 defineProps({
   activity: {
@@ -42,17 +37,14 @@ defineProps({
     type: Object,
     validator: isActivityValid,
   },
-  timelineItems: {
-    required: true,
-    type: Array,
-    validator: validateTimelineItems,
-  },
 })
 
 const emit = defineEmits({
   delete: isUndefined,
   setSecondsToComplete: isNumber,
 })
+
+const periodSelectOptions = inject("periodSelectOptions")
 </script>
 
 <style lang="scss" scoped></style>

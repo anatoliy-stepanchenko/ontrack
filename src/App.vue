@@ -4,17 +4,12 @@
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      :activities="activities"
-      :activity-select-options="activitySelectOptions"
       :current-page="currentPage"
-      @set-timeline-item-activity="setTimelineItemActivity"
-      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
       ref="timeline"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
-      :timeline-items="timelineItems"
       @delete-activity="deleteActivity"
       @create-activity="createActivity"
       @set-activity-seconds-to-complete="setActivitySecondsoComplete"
@@ -25,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue"
+import { computed, provide, ref } from "vue"
 import TheHeader from "./components/TheHeader.vue"
 import TheNav from "./components/TheNav.vue"
 import TheTimeline from "./pages/TheTimeline.vue"
@@ -37,6 +32,7 @@ import {
   generateTilineItems,
   generateActivitySelectOptions,
   generateActivities,
+  generatePeriodSelectOptions,
 } from "./functions"
 
 const activities = ref(generateActivities())
@@ -76,9 +72,8 @@ function createActivity(activity) {
   activities.value.push(activity)
 }
 
-function setTimelineItemActivity(timelineItem, activity) {
-  // timelineItem.activityId = activity?.id || null
-  timelineItem.activityId = activity.id
+function setTimelineItemActivity(timelineItem, activityId) {
+  timelineItem.activityId = activityId
 }
 
 function setActivitySecondsoComplete(activity, secondsToComplete) {
@@ -88,6 +83,12 @@ function setActivitySecondsoComplete(activity, secondsToComplete) {
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
   timelineItem.activitySeconds += activitySeconds
 }
+
+provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds)
+provide("timelineItems", timelineItems.value)
+provide("activitySelectOptions", activitySelectOptions.value)
+provide("periodSelectOptions", generatePeriodSelectOptions())
+provide("setTimelineItemActivity", setTimelineItemActivity)
 </script>
 
 <style scoped></style>
