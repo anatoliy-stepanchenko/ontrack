@@ -9,6 +9,9 @@
         :activity-select-options="activitySelectOptions"
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
         @scroll-to-hour="scrollToHour"
+        @update-activity-seconds="
+          emit('updateTimelineItemActivitySeconds', timelineItem, $event)
+        "
         ref="timelineItemRefs"
       />
     </ul>
@@ -26,6 +29,7 @@ import {
   isTimelineItemValid,
   isActivityValid,
   isPageValid,
+  isNumber,
 } from "../validators"
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "../constants"
 
@@ -55,6 +59,12 @@ const props = defineProps({
 const emit = defineEmits({
   setTimelineItemActivity(timelineItem, activity) {
     return [isTimelineItemValid(timelineItem), isActivityValid(activity)].every(
+      Boolean
+    )
+  },
+
+  updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
+    return [isTimelineItemValid(timelineItem), isNumber(activitySeconds)].every(
       Boolean
     )
   },

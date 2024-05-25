@@ -8,6 +8,7 @@
       :activity-select-options="activitySelectOptions"
       :current-page="currentPage"
       @set-timeline-item-activity="setTimelineItemActivity"
+      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
       ref="timeline"
     />
     <TheActivities
@@ -82,6 +83,10 @@ function setTimelineItemActivity(timelineItem, activity) {
 
 function setActivitySecondsoComplete(activity, secondsToComplete) {
   activity.secondsToComplete = secondsToComplete
+}
+
+function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
+  timelineItem.activitySeconds += activitySeconds
 }
 </script>
 
