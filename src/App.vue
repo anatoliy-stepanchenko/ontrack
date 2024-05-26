@@ -1,11 +1,10 @@
 <template>
-  <TheHeader @navigate="goTo($event)" />
+  <TheHeader />
   <main class="flex flex-grow flex-col">
     <TheTimeline
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
-      :current-page="currentPage"
-      ref="timeline"
+      ref="timelineRef"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
@@ -13,7 +12,7 @@
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
-  <TheNav :current-page="currentPage" @navigate="goTo($event)" />
+  <TheNav />
 </template>
 
 <script setup>
@@ -25,31 +24,17 @@ import TheActivities from "./pages/TheActivities.vue"
 import TheProgress from "./pages/TheProgress.vue"
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from "./constants"
 import {
-  normalizePageHash,
   generateTilineItems,
   generateActivitySelectOptions,
   generateActivities,
   generatePeriodSelectOptions,
 } from "./functions"
 
+import { currentPage, timelineRef } from "./router"
+
 const activities = ref(generateActivities())
 
 const timelineItems = ref(generateTilineItems(activities.value))
-
-const currentPage = ref(normalizePageHash())
-
-const timeline = ref()
-
-function goTo(page) {
-  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
-    timeline.value.scrollToHour()
-  }
-
-  if (page !== PAGE_TIMELINE) {
-    document.body.scrollIntoView()
-  }
-  currentPage.value = page
-}
 
 const activitySelectOptions = computed(() =>
   generateActivitySelectOptions(activities.value)

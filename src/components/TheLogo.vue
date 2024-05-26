@@ -1,11 +1,16 @@
 <template>
-  <a :href="`#${PAGE_TIMELINE}`" class="text-sm">
+  <a
+    :href="`#${PAGE_TIMELINE}`"
+    class="text-sm"
+    @click="navigate(PAGE_TIMELINE)"
+  >
     <img src="../assets/img/logo.png" alt="Logo" class="h-9" />
   </a>
 </template>
 
 <script setup>
 import { PAGE_TIMELINE } from "../constants"
+import { navigate } from "../router"
 </script>
 
 <style scoped></style>

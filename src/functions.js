@@ -1,24 +1,11 @@
 import {
-  PAGE_TIMELINE,
   HOURS_IN_A_DAY,
   SECONDS_IN_MINUTE,
   SECONDS_IN_HOUR,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND,
 } from "./constants"
-import { isNull, isPageValid } from "./validators"
-
-export function normalizePageHash() {
-  const page = window.location.hash.slice(1)
-
-  if (isPageValid(page)) {
-    return page
-  }
-
-  window.location.hash = PAGE_TIMELINE
-
-  return PAGE_TIMELINE
-}
+import { isNull } from "./validators"
 
 export function normalizeSelectValue(value) {
   return isNull(value) || isNaN(value) ? value : +value
