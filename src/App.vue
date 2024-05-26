@@ -10,9 +10,6 @@
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
-      @delete-activity="deleteActivity"
-      @create-activity="createActivity"
-      @set-activity-seconds-to-complete="setActivitySecondsoComplete"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
@@ -89,6 +86,9 @@ provide("timelineItems", timelineItems.value)
 provide("activitySelectOptions", activitySelectOptions.value)
 provide("periodSelectOptions", generatePeriodSelectOptions())
 provide("setTimelineItemActivity", setTimelineItemActivity)
+provide("setActivitySecondsoComplete", setActivitySecondsoComplete)
+provide("createActivity", createActivity)
+provide("deleteActivity", deleteActivity)
 </script>
 
 <style scoped></style>

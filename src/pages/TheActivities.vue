@@ -5,12 +5,11 @@
         v-for="activity in activities"
         :key="activity.id"
         :activity="activity"
-        @delete="emit('deleteActivity', activity)"
         @set-seconds-to-complete="setSecondsToComplete(activity, $event)"
       />
     </ul>
     <TheActivitiesEmptyState v-else />
-    <TheActivityForm @submit="emit('createActivity', $event)" />
+    <TheActivityForm />
   </div>
 </template>
 
@@ -19,7 +18,7 @@ import ActivityItem from "../components/ActivityItem.vue"
 import TheActivityForm from "../components/TheActivityForm.vue"
 import TheActivitiesEmptyState from "../components/TheActivitiesEmptyState.vue"
 
-import { isActivityValid, isNumber, validateActivities } from "../validators.js"
+import { validateActivities } from "../validators.js"
 
 defineProps({
   activities: {
@@ -28,20 +27,6 @@ defineProps({
     validator: validateActivities,
   },
 })
-
-const emit = defineEmits({
-  deleteActivity: isActivityValid,
-  createActivity: isActivityValid,
-  setActivitySecondsToComplete(activity, secondsToComplete) {
-    return [isActivityValid(activity), isNumber(secondsToComplete)].every(
-      Boolean
-    )
-  },
-})
-
-function setSecondsToComplete(activity, secondsToComplete) {
-  emit("setActivitySecondsToComplete", activity, secondsToComplete)
-}
 </script>
 
 <style scoped></style>

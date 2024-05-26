@@ -1,7 +1,7 @@
 <template>
   <li class="flex flex-col gap-2 p-4">
     <div class="flex items-center gap-4">
-      <BaseButton :type="BUTTON_TYPE_DANGER" @click="emit('delete')">
+      <BaseButton :type="BUTTON_TYPE_DANGER" @click="deleteActivity(activity)">
         <TrashIcon class="h-8" />
       </BaseButton>
       <span class="truncate text-xl">{{ activity.name }}</span>
@@ -12,7 +12,7 @@
         placeholder="hh:mm"
         :options="periodSelectOptions"
         :selected="activity.secondsToComplete || null"
-        @select="emit('setSecondsToComplete', $event || 0)"
+        @select="setActivitySecondsoComplete(activity, $event || 0)"
       />
       <ActivitySecondsToComplete
         v-if="activity.secondsToComplete"
@@ -28,7 +28,7 @@ import BaseButton from "./BaseButton.vue"
 import BaseSelec from "./BaseSelect.vue"
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue"
 import { BUTTON_TYPE_DANGER } from "../constants.js"
-import { isActivityValid, isUndefined, isNumber } from "../validators.js"
+import { isActivityValid, isUndefined } from "../validators.js"
 import { inject } from "vue"
 
 defineProps({
@@ -39,12 +39,9 @@ defineProps({
   },
 })
 
-const emit = defineEmits({
-  delete: isUndefined,
-  setSecondsToComplete: isNumber,
-})
-
 const periodSelectOptions = inject("periodSelectOptions")
+const setActivitySecondsoComplete = inject("setActivitySecondsoComplete")
+const deleteActivity = inject("deleteActivity")
 </script>
 
 <style lang="scss" scoped></style>

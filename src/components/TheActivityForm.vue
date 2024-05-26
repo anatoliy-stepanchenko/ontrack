@@ -16,19 +16,16 @@
 </template>
 
 <script setup>
-import { nextTick, ref } from "vue"
+import { inject, nextTick, ref } from "vue"
 import BaseButton from "./BaseButton.vue"
 import { PlusIcon } from "@heroicons/vue/24/outline"
 import { BUTTON_TYPE_PRIMARY } from "../constants.js"
-import { isActivityValid } from "../validators"
 import { generateId } from "../functions"
 
-const emit = defineEmits({
-  submit: isActivityValid,
-})
+const createActivity = inject("createActivity")
 
 async function submit() {
-  emit("submit", {
+  createActivity({
     id: generateId(),
     name: name.value,
     secondsToComplete: 0,
