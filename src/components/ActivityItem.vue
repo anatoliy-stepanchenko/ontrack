@@ -12,7 +12,7 @@
         placeholder="hh:mm"
         :options="periodSelectOptions"
         :selected="activity.secondsToComplete || null"
-        @select="setActivitySecondsoComplete(activity, $event || 0)"
+        @select="setActivitySecondsoComplete(activity, $event)"
       />
       <ActivitySecondsToComplete
         v-if="activity.secondsToComplete"
@@ -30,6 +30,11 @@ import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue"
 import { BUTTON_TYPE_DANGER } from "../constants.js"
 import { isActivityValid, isUndefined } from "../validators.js"
 import { inject } from "vue"
+import {
+  periodSelectOptionsKey,
+  setActivitySecondsoCompleteKey,
+  deleteActivityKey,
+} from "../keys"
 
 defineProps({
   activity: {
@@ -39,9 +44,9 @@ defineProps({
   },
 })
 
-const periodSelectOptions = inject("periodSelectOptions")
-const setActivitySecondsoComplete = inject("setActivitySecondsoComplete")
-const deleteActivity = inject("deleteActivity")
+const periodSelectOptions = inject(periodSelectOptionsKey)
+const setActivitySecondsoComplete = inject(setActivitySecondsoCompleteKey)
+const deleteActivity = inject(deleteActivityKey)
 </script>
 
 <style lang="scss" scoped></style>
