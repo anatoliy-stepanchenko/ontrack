@@ -1,7 +1,5 @@
 import {
-  HOURS_IN_A_DAY,
   SECONDS_IN_MINUTE,
-  SECONDS_IN_HOUR,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND,
 } from "./constants"
@@ -15,33 +13,8 @@ export function normalizeSelectValue(value) {
   return isNull(value) || isNaN(value) ? value : +value
 }
 
-export function generateActivities() {
-  return ["Coding", "Reading", "Training"].map((name, hours) => ({
-    id: generateId(),
-    name,
-    secondsToComplete: hours * SECONDS_IN_HOUR,
-  }))
-}
-
 export function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
-}
-
-export function getTotalActivitySeconds(activity, timelineItems) {
-  return timelineItems
-    .filter((timelineItem) => timelineItem.activityId === activity.id)
-    .reduce(
-      (totalSeconds, timelineItem) =>
-        Math.round(timelineItem.activitySeconds + totalSeconds),
-      0
-    )
-}
-
-export function generateActivitySelectOptions(activities) {
-  return activities.map((activity) => ({
-    value: activity.id,
-    label: activity.name,
-  }))
 }
 
 export function generatePeriodSelectOptions() {

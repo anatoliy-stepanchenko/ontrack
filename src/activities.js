@@ -1,5 +1,6 @@
 import { computed, ref } from "vue"
-import { generateActivitySelectOptions, generateActivities } from "./functions"
+import { generateId } from "./functions"
+import { SECONDS_IN_HOUR } from "./constants"
 
 export const activities = ref(generateActivities())
 
@@ -15,6 +16,21 @@ export function createActivity(activity) {
   activities.value.push(activity)
 }
 
-export function setActivitySecondsoComplete(activity, secondsToComplete) {
+export function setActivitySecondsToComplete(activity, secondsToComplete) {
   activity.secondsToComplete = secondsToComplete || 0
+}
+
+function generateActivities() {
+  return ["Coding", "Reading", "Training"].map((name, hours) => ({
+    id: generateId(),
+    name,
+    secondsToComplete: hours * SECONDS_IN_HOUR,
+  }))
+}
+
+function generateActivitySelectOptions(activities) {
+  return activities.map((activity) => ({
+    value: activity.id,
+    label: activity.name,
+  }))
 }

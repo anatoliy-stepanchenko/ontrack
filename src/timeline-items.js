@@ -12,7 +12,7 @@ export function updateTimelineItemActivitySeconds(
   timelineItem,
   activitySeconds
 ) {
-  timelineItem.activitySeconds += activitySeconds
+  timelineItem.activitySeconds = activitySeconds
 }
 
 export function resetTimelineItemActivities(activity) {
@@ -36,4 +36,14 @@ function generateTilineItems() {
     // activitySeconds:
     //   hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
   }))
+}
+
+export function getTotalActivitySeconds(activity) {
+  return timelineItems.value
+    .filter((timelineItem) => timelineItem.activityId === activity.id)
+    .reduce(
+      (totalSeconds, timelineItem) =>
+        Math.round(timelineItem.activitySeconds + totalSeconds),
+      0
+    )
 }
