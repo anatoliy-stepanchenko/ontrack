@@ -15,7 +15,7 @@
         placeholder="hh:mm"
         :options="PERIOD_SELECT_OPTIONS"
         :selected="activity.secondsToComplete || null"
-        @select="setActivitySecondsToComplete(activity, $event)"
+        @select="updateActivity(activity, { secondsToComplete: $event || 0 })"
       />
       <ActivitySecondsToComplete
         v-if="activity.secondsToComplete"
@@ -33,7 +33,7 @@ import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue"
 import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS } from "../constants.js"
 import { isActivityValid } from "../validators.js"
 
-import { deleteActivity, setActivitySecondsToComplete } from "../activities"
+import { deleteActivity, updateActivity } from "../activities"
 import { resetTimelineItemActivities } from "../timeline-items"
 
 defineProps({

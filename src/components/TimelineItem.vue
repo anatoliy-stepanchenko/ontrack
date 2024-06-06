@@ -8,7 +8,7 @@
       :options="activitySelectOptions"
       placeholder="Rest"
       :selected="timelineItem.activityId"
-      @select="setTimelineItemActivity(timelineItem, $event)"
+      @select="updateTimelineItem(timelineItem, { activityId: $event })"
     />
     <TimelineStopwatch :timeline-item="timelineItem" />
   </li>
@@ -22,7 +22,7 @@ import TimelineHour from "../components/TimelineHour.vue"
 import { isTimelineItemValid, isUndefined } from "../validators"
 
 import { activitySelectOptions } from "../activities"
-import { setTimelineItemActivity } from "../timeline-items"
+import { updateTimelineItem } from "../timeline-items"
 
 defineProps({
   timelineItem: {
