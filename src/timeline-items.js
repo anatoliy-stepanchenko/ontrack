@@ -7,24 +7,23 @@ export const timelineItems = ref(generateTilineItems())
 
 export const timelineItemRefs = ref([])
 
-export function setTimelineItemActivity(timelineItem, activityId) {
-  timelineItem.activityId = activityId
-}
-
-export function updateTimelineItemActivitySeconds(
-  timelineItem,
-  activitySeconds
-) {
-  timelineItem.activitySeconds = activitySeconds
+export function updateTimelineItem(timelineItem, fields) {
+  return Object.assign(timelineItem, fields)
 }
 
 export function resetTimelineItemActivities(activity) {
-  timelineItems.value.forEach((timelineItem) => {
-    if (timelineItem.activityId === activity.id) {
-      timelineItem.activityId = null
-      timelineItem.activitySeconds = 0
-    }
-  })
+  timelineItems.value
+    .filter((timelineItem) => hasActivity(timelineItem, activity))
+    .forEach((timelineItem) =>
+      updateTimelineItem(timelineItem, {
+        activityId: null,
+        activitySeconds: 0,
+      })
+    )
+}
+
+function hasActivity(timelineItem, activity) {
+  return timelineItem.activityId === activity.id
 }
 
 function generateTilineItems() {
