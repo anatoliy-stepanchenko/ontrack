@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4">
     <BaseButton @click="select(null)">
-      <XMarkIcon class="h-8" />
+      <BaseIcon name="XMark" class="h-8" />
     </BaseButton>
     <select
       @change="select($event.target.value)"
@@ -24,8 +24,8 @@
 
 <script setup>
 import { computed } from "vue"
-import { XMarkIcon } from "@heroicons/vue/24/outline"
 import BaseButton from "./BaseButton.vue"
+import BaseIcon from "./BaseIcon.vue"
 import { normalizeSelectValue } from "../functions"
 
 import {

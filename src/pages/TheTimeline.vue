@@ -13,24 +13,17 @@
 </template>
 
 <script setup>
-import { nextTick, watchPostEffect } from "vue"
+import { onActivated } from "vue"
 import TimelineItem from "../components/TimelineItem.vue"
 
-import { currentPage } from "../router"
 import {
   timelineItems,
   timelineItemRefs,
   scrollToHour,
   scrollToCurrentHour,
 } from "../timeline-items"
-import { PAGE_TIMELINE } from "../constants"
 
-watchPostEffect(async () => {
-  if (currentPage.value === PAGE_TIMELINE) {
-    await nextTick()
-    scrollToCurrentHour(false)
-  }
-})
+onActivated(scrollToCurrentHour)
 </script>
 
 <style lang="scss" scoped></style>
