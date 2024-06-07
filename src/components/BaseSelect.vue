@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4">
     <BaseButton @click="select(null)">
-      <BaseIcon name="XMark" class="h-8" />
+      <BaseIcon :name="ICON_X_MARK" class="h-8" />
     </BaseButton>
     <select
       @change="select($event.target.value)"
@@ -33,6 +33,7 @@ import {
   isUndefinedOrNull,
   isSelectValueValid,
 } from "../validators"
+import { ICON_X_MARK } from "../icons"
 
 const props = defineProps({
   options: {

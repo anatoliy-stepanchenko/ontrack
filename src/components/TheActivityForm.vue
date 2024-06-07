@@ -10,7 +10,7 @@
       placeholder="Activity name"
     />
     <BaseButton :type="BUTTON_TYPE_PRIMARY" :disabled="name.trim() === ''">
-      <BaseIcon name="Plus" class="h-8" />
+      <BaseIcon :name="ICON_PLUS" class="h-8" />
     </BaseButton>
   </form>
 </template>
@@ -23,6 +23,7 @@ import BaseIcon from "./BaseIcon.vue"
 import { BUTTON_TYPE_PRIMARY } from "../constants.js"
 import { generateId } from "../functions"
 import { createActivity } from "../activities"
+import { ICON_PLUS } from "../icons"
 
 async function submit() {
   createActivity({

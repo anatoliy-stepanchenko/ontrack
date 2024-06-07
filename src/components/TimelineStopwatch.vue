@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full gap-4">
     <BaseButton :type="BUTTON_TYPE_DANGER" :disabled="!seconds" @click="reset"
-      ><BaseIcon name="ArrowPath" class="h-8"
+      ><BaseIcon :name="ICON_ARROW_PATH" class="h-8"
     /></BaseButton>
     <div
       class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl"
@@ -9,14 +9,14 @@
       {{ formatSeconds(seconds) }}
     </div>
     <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop"
-      ><BaseIcon name="Pause" class="h-8"
+      ><BaseIcon :name="ICON_PAUSE" class="h-8"
     /></BaseButton>
     <BaseButton
       v-else
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
       :disabled="isStartButtonDisabled"
-      ><BaseIcon name="Play" class="h-8"
+      ><BaseIcon :name="ICON_PLAY" class="h-8"
     /></BaseButton>
   </div>
 </template>
@@ -35,6 +35,7 @@ import {
 import { currentHour, formatSeconds } from "../functions"
 import { isTimelineItemValid } from "../validators"
 import { updateTimelineItem } from "../timeline-items"
+import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "../icons"
 
 const props = defineProps({
   timelineItem: {
