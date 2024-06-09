@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-4">
     <BaseButton @click="select(null)">
-      <BaseIcon :name="ICON_X_MARK" class="h-8" />
+      <BaseIcon :name="ICON_X_MARK" />
     </BaseButton>
     <select
       @change="select($event.target.value)"
