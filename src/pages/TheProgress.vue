@@ -1,6 +1,5 @@
 <template>
   <ul class="divide-y">
-    <span>progress</span>
     <ProgressItem
       v-for="(activity, index) in trackedActivities"
       :key="activity.id"
@@ -12,7 +11,7 @@
 
 <script setup>
 import ProgressItem from "../components/ProgressItem.vue"
-import { trackedActivities, activities } from "../activities"
+import { trackedActivities } from "../activities"
 </script>
 
 <style scoped></style>
