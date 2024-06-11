@@ -1,20 +1,15 @@
 <template>
-  <component :is="ICONS[name]" :class="classes" />
+  <component :is="ICONS[name]" :class="$attrs.class || 'h-8'" />
 </template>
 
 <script setup>
 import { ICONS } from "../icons"
-import { isIconValid, isNotEmptyString } from "../validators"
+import { isIconValid } from "../validators"
 defineProps({
   name: {
     required: true,
     type: String,
     validator: isIconValid,
-  },
-  classes: {
-    default: "h-8",
-    type: String,
-    validator: isNotEmptyString,
   },
 })
 </script>
