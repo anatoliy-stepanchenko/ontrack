@@ -34,7 +34,7 @@ import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS } from "../constants.js"
 import { isActivityValid } from "../validators.js"
 
 import { deleteActivity, updateActivity } from "../activities"
-import { resetTimelineItemActivities } from "../timeline-items"
+import { timelineItems, resetTimelineItemActivities } from "../timeline-items"
 import { ICON_TRASH } from "../icons"
 
 defineProps({
@@ -46,7 +46,8 @@ defineProps({
 })
 
 function deleteAndResetActivity(activity) {
-  resetTimelineItemActivities(activity), deleteActivity(activity)
+  resetTimelineItemActivities(timelineItems.value, activity),
+    deleteActivity(activity)
 }
 </script>
 
