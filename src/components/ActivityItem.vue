@@ -17,7 +17,7 @@
         :selected="activity.secondsToComplete || null"
         @select="updateActivity(activity, { secondsToComplete: $event || 0 })"
       />
-      <ActivitySecondsToComplete
+      <RemainingActivitySeconds
         v-if="activity.secondsToComplete"
         :activity="activity"
       />
@@ -29,7 +29,7 @@
 import BaseButton from "./BaseButton.vue"
 import BaseSelec from "./BaseSelect.vue"
 import BaseIcon from "./BaseIcon.vue"
-import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue"
+import RemainingActivitySeconds from "./RemainingActivitySeconds.vue"
 import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS } from "../constants.js"
 import { isActivityValid } from "../validators.js"
 
