@@ -22,19 +22,19 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue"
+import { watch } from "vue"
 import BaseButton from "./BaseButton.vue"
 import BaseIcon from "./BaseIcon.vue"
+import { useStopwatch } from "../composables/stopWatch"
 
 import {
   BUTTON_TYPE_DANGER,
   BUTTON_TYPE_WARNING,
   BUTTON_TYPE_SUCCESS,
-  MILLISECONDS_IN_SECOND,
 } from "../constants"
 import { currentHour, formatSeconds } from "../functions"
-import { isTimelineItemValid } from "../validators"
 import { updateTimelineItem } from "../timeline-items"
+import { isTimelineItemValid } from "../validators"
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "../icons"
 
 const props = defineProps({
@@ -44,41 +44,19 @@ const props = defineProps({
     validator: isTimelineItemValid,
   },
 })
-
-const seconds = ref(props.timelineItem.activitySeconds)
-const isRunning = ref(false)
-const temp = 120
-
 const isStartButtonDisabled = props.timelineItem.hour !== currentHour()
 
-watch(
-  () => props.timelineItem.activityId,
-  () =>
-    updateTimelineItem(props.timelineItem, {
-      activitySeconds: seconds.value,
-    })
+const { seconds, isRunning, start, stop, reset } = useStopwatch(
+  props.timelineItem.activitySeconds,
+  updateTimelineItemActivitySeconds
 )
 
-function start() {
-  isRunning.value = setInterval(() => {
-    updateTimelineItem(props.timelineItem, {
-      activitySeconds: props.timelineItem.activitySeconds + temp,
-    })
-    seconds.value += temp
-  }, MILLISECONDS_IN_SECOND)
-}
+watch(() => props.timelineItem.activityId, updateTimelineItemActivitySeconds)
 
-function stop() {
-  clearInterval(isRunning.value)
-  isRunning.value = false
-}
-
-function reset() {
-  stop()
+function updateTimelineItemActivitySeconds() {
   updateTimelineItem(props.timelineItem, {
-    activitySeconds: props.timelineItem.activitySeconds - seconds.value,
+    activitySeconds: seconds.value,
   })
-  seconds.value = 0
 }
 </script>
 
