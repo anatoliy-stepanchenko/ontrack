@@ -15,9 +15,10 @@ const props = defineProps({
   },
 })
 
-const classes = `${
-  typeClassesButton[props.type]
-} rounded disabled:cursor-not-allowed disabled:opacity-50`
+const classes = [
+  "rounded disabled:cursor-not-allowed disabled:opacity-50",
+  typeClassesButton[props.type],
+]
 </script>
 
 <script>
