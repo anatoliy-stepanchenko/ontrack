@@ -2,31 +2,45 @@
   <hr
     ref="indicatorRef"
     class="pointer-events-none absolute z-10 w-full border-b-2 border-red-600"
-    :style="{ top: `${calculateTopOffset()}px` }"
+    :style="{ top: `${topOffset}px` }"
   />
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, computed, watchEffect, onActivated, onDeactivated } from "vue"
 import {
   HUNDRED_PERCENT,
   SECONDS_IN_DAY,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
+  MILLISECONDS_IN_SECOND,
 } from "../constants"
 
 const indicatorRef = ref()
 
-function calculateTopOffset() {
-  return (
-    (calculateSecondsSinceMidnightInPercent() * getTimelineHeight()) /
-    HUNDRED_PERCENT
-  )
-}
+const secondsSinceMidnight = ref(calculateSecondsSinceMidnight())
 
-function calculateSecondsSinceMidnightInPercent() {
-  return (calculateSecondsSinceMidnight() * HUNDRED_PERCENT) / SECONDS_IN_DAY
-}
+let timer = null
+
+onActivated(() => {
+  secondsSinceMidnight.value = calculateSecondsSinceMidnight()
+
+  timer = setInterval(() => {
+    secondsSinceMidnight.value += 5 * 60
+  }, MILLISECONDS_IN_SECOND)
+})
+
+onDeactivated(() => clearInterval(timer))
+
+const topOffset = computed(
+  () =>
+    (secondsSinceMidnightInPercent.value * getTimelineHeight()) /
+    HUNDRED_PERCENT
+)
+
+const secondsSinceMidnightInPercent = computed(
+  () => (secondsSinceMidnight.value * HUNDRED_PERCENT) / SECONDS_IN_DAY
+)
 
 function calculateSecondsSinceMidnight() {
   const now = new Date()
@@ -39,8 +53,14 @@ function calculateSecondsSinceMidnight() {
 }
 
 function getTimelineHeight() {
-  return indicatorRef.value?.parentNode.getBoundingCientRect().height
+  return indicatorRef.value?.parentNode.getBoundingClientRect().height
 }
+
+watchEffect(() => {
+  if (secondsSinceMidnight.value > SECONDS_IN_DAY) {
+    secondsSinceMidnight.value = 0
+  }
+})
 </script>
 
 <style scoped></style>

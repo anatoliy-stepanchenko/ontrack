@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-7">
+  <div class="relative mt-7">
     <TheTimelineIndicator />
     <ul>
       <TimelineItem
