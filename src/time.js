@@ -5,7 +5,7 @@ import {
   MILLISECONDS_IN_SECOND,
 } from "./constants"
 
-const now = ref(new Date())
+export const now = ref(new Date())
 
 const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0))
 
@@ -23,7 +23,7 @@ export function startTimer() {
   now.value = new Date()
 
   timer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + 5 * 60 * MILLISECONDS_IN_SECOND)
+    now.value = new Date(now.value.getTime() + 60 * MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND)
 }
 

@@ -18,7 +18,7 @@
       v-else
       :type="BUTTON_TYPE_SUCCESS"
       @click="start"
-      :disabled="isStartButtonDisabled"
+      :disabled="props.timelineItem.hour !== now.getHours()"
       ><BaseIcon :name="ICON_PLAY"
     /></BaseButton>
   </div>
@@ -35,10 +35,11 @@ import {
   BUTTON_TYPE_WARNING,
   BUTTON_TYPE_SUCCESS,
 } from "../constants"
-import { currentHour, formatSeconds } from "../functions"
+import { formatSeconds } from "../functions"
 import { updateTimelineItem } from "../timeline-items"
 import { isTimelineItemValid } from "../validators"
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "../icons"
+import { now } from "../time"
 
 const props = defineProps({
   timelineItem: {
@@ -47,7 +48,6 @@ const props = defineProps({
     validator: isTimelineItemValid,
   },
 })
-const isStartButtonDisabled = props.timelineItem.hour !== currentHour()
 
 const { seconds, isRunning, start, stop, reset } = useStopwatch(
   props.timelineItem.activitySeconds
@@ -58,6 +58,12 @@ watchEffect(() =>
     activitySeconds: seconds.value,
   })
 )
+
+watchEffect(() => {
+  if (props.timelineItem.hour !== now.value.getHours() && isRunning) {
+    stop()
+  }
+})
 </script>
 
 <style scoped></style>
