@@ -1,16 +1,24 @@
 import { APP_NAME } from "./constants"
+import { today } from "./time"
+import { timelineItems } from "./timeline-items"
+import { activities } from "./activities"
 
-export function load() {
-  const state = localStorage.getItem(APP_NAME)
-  return state ? JSON.parse(state) : {}
+export function loadState() {
+  const serializedState = localStorage.getItem(APP_NAME)
+  const state = serializedState ? JSON.parse(serializedState) : {}
+  timelineItems.value = today(new Date(state.date))
+    ? state.timelineItems
+    : timelineItems.value
+  activities.value = state.activities || activities.value
 }
 
-export function save(data) {
+export function saveState() {
   localStorage.setItem(
     APP_NAME,
     JSON.stringify({
-      ...data,
-      date: new Date().toDateString(),
+      timelineItems: timelineItems.value,
+      activities: activities.value,
+      date: today(),
     })
   )
 }
