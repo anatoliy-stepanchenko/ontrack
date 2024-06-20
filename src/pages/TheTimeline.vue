@@ -22,7 +22,10 @@ import {
   timelineItems,
   timelineItemRefs,
   scrollToCurrentHour,
+  stopTimelineItemTimer,
 } from "../timeline-items"
+
+stopTimelineItemTimer()
 
 onActivated(() => {
   scrollToCurrentHour(), startTimer()

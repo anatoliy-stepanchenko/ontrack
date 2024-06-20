@@ -1,5 +1,9 @@
 import { ref } from "vue"
-import { HOURS_IN_A_DAY, MIDNIGHT_HOUR } from "./constants"
+import {
+  HOURS_IN_A_DAY,
+  MIDNIGHT_HOUR,
+  MILLISECONDS_IN_SECOND,
+} from "./constants"
 import { now } from "./time"
 
 export const timelineItems = ref(generateTilineItems())
@@ -38,6 +42,7 @@ function generateTilineItems() {
     // activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
     // activitySeconds:
     //   hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
+    isActive: false,
   }))
 }
 
@@ -58,4 +63,22 @@ export function scrollToHour(hour, isSmooth = true) {
       : timelineItemRefs.value[hour - 1].$el
 
   el.scrollIntoView({ behavior: isSmooth ? "smooth" : "instant" })
+}
+
+let timelineItemTimer = null
+
+export function startTimelineItemTimer(activeTimelineItem) {
+  timelineItemTimer = setInterval(() => {
+    updateTimelineItem(activeTimelineItem, {
+      activitySeconds: activeTimelineItem.activitySeconds + 1,
+    })
+  }, MILLISECONDS_IN_SECOND)
+}
+
+export function findActiveTimelineItem() {
+  return timelineItems.value.find(({ isActive }) => isActive)
+}
+
+export function stopTimelineItemTimer() {
+  clearInterval(timelineItemTimer)
 }

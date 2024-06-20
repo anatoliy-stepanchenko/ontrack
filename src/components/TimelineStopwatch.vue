@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { watchEffect } from "vue"
+import { watchEffect, watch, onMounted } from "vue"
 import BaseButton from "./BaseButton.vue"
 import BaseIcon from "./BaseIcon.vue"
 import { useStopwatch } from "../composables/stopWatch"
@@ -53,6 +53,12 @@ const { seconds, isRunning, start, stop, reset } = useStopwatch(
   props.timelineItem.activitySeconds
 )
 
+onMounted(() => {
+  if (props.timelineItem.isActive) {
+    start()
+  }
+})
+
 watchEffect(() =>
   updateTimelineItem(props.timelineItem, {
     activitySeconds: seconds.value,
@@ -63,6 +69,12 @@ watchEffect(() => {
   if (props.timelineItem.hour !== now.value.getHours() && isRunning) {
     stop()
   }
+})
+
+watch(isRunning, () => {
+  updateTimelineItem(props.timelineItem, {
+    isActive: Boolean(isRunning.value),
+  })
 })
 </script>
 
