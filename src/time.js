@@ -8,7 +8,7 @@ import {
 export function today() {
   const today = new Date()
 
-  today.setHours(0, 0)
+  // today.setHours(0, 0)
 
   return today
 }
@@ -43,7 +43,7 @@ export function startTimer() {
   now.value = today()
 
   timer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + 60 * MILLISECONDS_IN_SECOND)
+    now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND)
 }
 
