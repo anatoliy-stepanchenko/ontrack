@@ -41,7 +41,7 @@ import {
   startTimelineItemTimer,
   stopTimelineItemTimer,
   timelineItemTimer,
-} from "../timeline-items"
+} from "../timeline-item-timer"
 import { isTimelineItemValid } from "../validators"
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from "../icons"
 import { now } from "../time"
