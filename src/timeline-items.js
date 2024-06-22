@@ -58,3 +58,11 @@ export function scrollToHour(hour, isSmooth = true) {
 
   el.scrollIntoView({ behavior: isSmooth ? "smooth" : "instant" })
 }
+
+export function resetTimelineItems(timelineItems) {
+  return timelineItems.map((timelineItem) => ({
+    ...timelineItem,
+    activitySeconds: 0,
+    isActive: false,
+  }))
+}
