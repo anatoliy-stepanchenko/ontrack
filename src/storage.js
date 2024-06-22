@@ -33,7 +33,7 @@ function syncIdleSeconds(timelineItems, lastActiveAt) {
 }
 
 function calculateIdleSeconds(lastActiveAt) {
-  return lastActiveAt.getHours() === today().getHours
+  return lastActiveAt.getHours() === today().getHours()
     ? toSeconds(today() - lastActiveAt)
     : toSeconds(endOfHour(lastActiveAt) - lastActiveAt)
 }
