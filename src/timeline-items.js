@@ -1,8 +1,8 @@
 import { computed, ref } from "vue"
 import { HOURS_IN_A_DAY, MIDNIGHT_HOUR } from "./constants"
-import { now } from "./time"
+import { now, isToday, today, toSeconds, endOfHour } from "./time"
 
-export const timelineItems = ref(generateTilineItems())
+export const timelineItems = ref([])
 
 export const timelineItemRefs = ref([])
 
@@ -59,10 +59,36 @@ export function scrollToHour(hour, isSmooth = true) {
   el.scrollIntoView({ behavior: isSmooth ? "smooth" : "instant" })
 }
 
-export function resetTimelineItems(timelineItems) {
+function resetTimelineItems(timelineItems) {
   return timelineItems.map((timelineItem) => ({
     ...timelineItem,
     activitySeconds: 0,
     isActive: false,
   }))
+}
+
+export function initializeTimelineItems(state) {
+  const lastActiveAt = new Date(state.lastActiveAt)
+
+  timelineItems.value = state.timelineItems ?? generateTilineItems()
+
+  if (activeTimelineItem.value && isToday(lastActiveAt)) {
+    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt)
+  } else if (state.timelineItems && !isToday(lastActiveAt)) {
+    timelineItems.value = resetTimelineItems(state.timelineItems)
+  }
+}
+
+function syncIdleSeconds(timelineItems, lastActiveAt) {
+  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive)
+  if (activeTimelineItem) {
+    activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt)
+  }
+  return timelineItems
+}
+
+function calculateIdleSeconds(lastActiveAt) {
+  return lastActiveAt.getHours() === today().getHours()
+    ? toSeconds(today() - lastActiveAt)
+    : toSeconds(endOfHour(lastActiveAt) - lastActiveAt)
 }

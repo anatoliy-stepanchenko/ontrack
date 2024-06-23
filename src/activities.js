@@ -39,6 +39,10 @@ export function calculateCompletionPercentage(totalTrackedSeconds) {
   )
 }
 
+export function initializeActivities(state) {
+  activities.value = state.activities || []
+}
+
 const totalActivitySecondsToComplete = computed(() => {
   return trackedActivities.value
     .map(({ secondsToComplete }) => secondsToComplete)
