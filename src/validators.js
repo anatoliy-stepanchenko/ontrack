@@ -22,16 +22,8 @@ export function isButtonTypeValid(BUTTON_TYPE_DANGER) {
   return Object.keys(BUTTON_TYPES).includes(type)
 }
 
-export function validateTimelineItems(timelineItems) {
-  return timelineItems.every(isTimelineItemValid)
-}
-
 export function isTimelineItemValid({ hour }) {
   return isHourValid(hour)
-}
-
-export function validateActivities(activities) {
-  return activities.every(isActivityValid)
 }
 
 export function isActivityValid({ id, name, secondsToComplete }) {

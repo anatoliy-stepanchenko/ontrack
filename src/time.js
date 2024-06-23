@@ -7,9 +7,7 @@ import {
 } from "./constants"
 
 export function today() {
-  const today = new Date()
-
-  return today
+  return new Date()
 }
 
 export function tomorrow() {
@@ -55,9 +53,10 @@ export function endOfHour(date) {
 export function startCurrentDateTimer() {
   now.value = today()
 
-  currentDateTimer = setInterval(() => {
-    now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)
-  }, MILLISECONDS_IN_SECOND)
+  currentDateTimer = setInterval(
+    () => (now.value = today()),
+    MILLISECONDS_IN_SECOND
+  )
 }
 
 export function stopCurrentDateTimer() {
