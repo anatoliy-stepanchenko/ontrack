@@ -34,8 +34,6 @@ const secondsSinceMidnight = computed(
   () => (now.value - midnight.value) / MILLISECONDS_IN_SECOND
 )
 
-let currentDateTimer = null
-
 export function toSeconds(milliseconds) {
   return Math.round(milliseconds / MILLISECONDS_IN_SECOND)
 }
@@ -51,14 +49,5 @@ export function endOfHour(date) {
 }
 
 export function startCurrentDateTimer() {
-  now.value = today()
-
-  currentDateTimer = setInterval(
-    () => (now.value = today()),
-    MILLISECONDS_IN_SECOND
-  )
-}
-
-export function stopCurrentDateTimer() {
-  clearInterval(currentDateTimer)
+  setInterval(() => (now.value = today()), MILLISECONDS_IN_SECOND)
 }
