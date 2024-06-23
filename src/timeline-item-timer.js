@@ -3,9 +3,11 @@ import { updateTimelineItem, activeTimelineItem } from "./timeline-items"
 import { now } from "./time"
 import { MILLISECONDS_IN_SECOND } from "./constants"
 
-export const timelineItemTimer = ref(false)
+const timelineItemTimer = ref(false)
 
 export function startTimelineItemTimer(timelineItem) {
+  timelineItem = timelineItem ?? activeTimelineItem.value
+
   updateTimelineItem(timelineItem, {
     isActive: true,
   })
@@ -17,8 +19,8 @@ export function startTimelineItemTimer(timelineItem) {
   }, MILLISECONDS_IN_SECOND)
 }
 
-export function stopTimelineItemTimer(timelineItem) {
-  updateTimelineItem(timelineItem, {
+export function stopTimelineItemTimer() {
+  updateTimelineItem(activeTimelineItem.value, {
     isActive: false,
   })
   clearInterval(timelineItemTimer.value)
@@ -29,7 +31,9 @@ export function resetTimelineItemTimer(timelineItem) {
   updateTimelineItem(timelineItem, {
     activitySeconds: 0,
   })
-  stopTimelineItemTimer(timelineItem)
+  if (activeTimelineItem.value) {
+    stopTimelineItemTimer()
+  }
 }
 
 watchEffect(() => {
@@ -37,6 +41,6 @@ watchEffect(() => {
     activeTimelineItem.value &&
     activeTimelineItem.value.hour !== now.value.getHours()
   ) {
-    stopTimelineItemTimer(activeTimelineItem.value)
+    stopTimelineItemTimer()
   }
 })
